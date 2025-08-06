@@ -1,0 +1,73 @@
+openebs:
+  localpv-provisioner:
+    rbac:
+      create: true
+    localpv:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: role
+                    operator: In
+                    values:
+                      - vault
+  engines:
+    local:
+      lvm:
+        enabled: false
+      zfs:
+        enabled: false
+      rawfile:
+        # Disabled by default since rawfile is not marked as stable yet.
+        enabled: false
+    replicated:
+      mayastor:
+        enabled: false
+
+  zfs-localpv:
+    crds:
+      zfsLocalPv:
+        enabled: false
+      csi:
+        volumeSnapshots:
+          enabled: false
+
+  # Refer to https://github.com/openebs/lvm-localpv/blob/lvm-localpv-1.6.2/deploy/helm/charts/values.yaml for complete set of values.
+  lvm-localpv:
+    crds:
+      lvmLocalPv:
+        enabled: false
+      csi:
+        volumeSnapshots:
+          enabled: false
+
+  # Refer to https://github.com/openebs/rawfile-localpv/blob/v0.11.0/deploy/helm/rawfile-localpv/values.yaml for complete set of values.
+  rawfile-localpv:
+    crds:
+      csi:
+        volumeSnapshots:
+          enabled: false
+
+  # Refer to https://github.com/openebs/mayastor-extensions/blob/v2.8.0/chart/values.yaml for complete set of values.
+  mayastor:
+    csi:
+      node:
+        initContainers:
+          enabled: true
+    etcd:
+      # -- Kubernetes Cluster Domain
+      clusterDomain: cluster.local
+    localpv-provisioner:
+      enabled: false
+    crds:
+      enabled: false
+    loki:
+      enabled: false
+    alloy:
+      enabled: false
+
+
+      pullPolicy: IfNotPresent
+
+
