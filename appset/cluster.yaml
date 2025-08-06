@@ -23,12 +23,13 @@ spec:
         helm:
           valueFiles:
           - values.yaml
+          releaseName: '{{ (split "-" .path.basename)._0 }}'
         repoURL: https://github.com/k8-IaC-lab/argocd-vault.git
         targetRevision: HEAD
         path: '{{.path.path}}'
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{index .path.segments 1}}'
+        namespace: '{{.path.basename}}'
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
