@@ -1,0 +1,13 @@
+rancher-webhook:
+  auth:
+    allowedCNs: []
+    clientCA: ''
+  global:
+    cattle: {}
+    hostNetwork: false
+  mcm:
+    enabled: true
+  nodeSelector: {}
+  port: 9443
+  priorityClassName: rancher-critical
+  tolerations: []

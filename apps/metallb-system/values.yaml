@@ -1,0 +1,4 @@
+metallb:
+  crds:
+    enabled: true
+    validationFailurePolicy: Fail
