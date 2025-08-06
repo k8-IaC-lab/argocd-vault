@@ -29,6 +29,11 @@ vault:
           }
 
           service_registration "kubernetes" {}
+    service:
+      type: LoadBalancer
+      externalTrafficPolicy: Local   # (optional, defaults to Cluster)
+      port: 8200
+      targetPort: 8200
   dataStorage:
     enabled: true
     # Size of the PVC created
