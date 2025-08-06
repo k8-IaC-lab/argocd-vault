@@ -24,7 +24,12 @@ openebs:
     replicated:
       mayastor:
         enabled: false
-
+  alloy:
+    enabled: false
+  loki:
+    enabled: false
+  minio:
+    enabled: false
   zfs-localpv:
     crds:
       zfsLocalPv:
