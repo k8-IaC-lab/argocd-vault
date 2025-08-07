@@ -2,3 +2,37 @@ argo-cd:
   server:
     service:
       type: LoadBalancer
+
+
+  ## Repo Server
+  repoServer:
+    # -- Repo server name
+    name: repo-server
+
+    # -- The number of repo server pods to run
+    replicas: 1
+
+    # -- Init containers to add to the repo server pods
+    initContainers:
+    - name: download-tools
+      image: alpine:3.8
+      command: [sh, -c]
+      args:
+        - wget -O argocd-vault-plugin
+          https://github.com/argoproj-labs/argocd-vault-plugin/releases/download/v1.6.0/argocd-vault-plugin_1.6.0_linux_amd64
+
+          chmod +x argocd-vault-plugin &&\
+          mv argocd-vault-plugin /custom-tools/
+
+      volumeMounts:
+        - mountPath: /custom-tools
+          name: custom-tools
+      envFrom:
+        - secretRef:
+            name: argocd-vault-plugin-credentials
+
+    # -- Additional volumes to the repo server pod
+    volumes:
+      - name: custom-tools
+        emptyDir: {}
+  
