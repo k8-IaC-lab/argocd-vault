@@ -3,6 +3,15 @@ argo-cd:
     service:
       type: LoadBalancer
 
+  configs:
+    cm:
+    # append to argocd config for vault plugin
+      configManagementPlugins: |-
+        - name: argocd-vault-plugin
+          generate:
+            command: ["argocd-vault-plugin"]
+            args: ["generate", "./"]
+        # (add any other plugins as additional `- name: ...` sections)
 
   ## Repo Server
   repoServer:
@@ -35,4 +44,3 @@ argo-cd:
     volumes:
       - name: custom-tools
         emptyDir: {}
-  
