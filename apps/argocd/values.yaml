@@ -21,6 +21,11 @@ argo-cd:
     # -- The number of repo server pods to run
     replicas: 1
 
+    volumeMounts:
+    - mountPath: /usr/local/bin/argocd-vault-plugin
+      subPath: argocd-vault-plugin
+      name: custom-tools
+
     # -- Init containers to add to the repo server pods
     initContainers:
     - name: download-tools
